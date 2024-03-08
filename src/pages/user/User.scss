@@ -1,0 +1,99 @@
+.UserInfo {
+    width: 100vw;
+    padding-top: 40px;
+    // height: 100vh;
+    // background-color: var(--accent-color);
+    background-color: #eeeeee;
+
+    .UserInfo__deleteText {
+        text-align: center;
+        margin-top: 40px;
+        letter-spacing: 1px;
+        color: rgba(255, 0, 0, 1);
+    }
+
+    .UserInfo__card {
+        width: 30%;
+        margin-inline: auto;
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-color: var(--background-color);
+        border: 1px solid rgba(0, 169, 255, 0.2);
+        border-radius: 4px;
+        position: relative;
+
+        .UserInfo__userProfile {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 150px;
+                margin-block: 16px;
+            }
+        }
+
+        .UserInfo__userDetails {
+            width: 100%;
+            flex: 1;
+
+            .UserInfo__userName {
+                padding-left: 16px;
+                margin-top: 30px;
+                font-size: 1.2rem;
+                letter-spacing: 1px;
+                color: var(--primary-color);
+            }
+
+            .UserInfo__userEmail {
+                padding-left: 16px;
+                margin-block: 20px;
+                columns: 1rem;
+                color: var(--primary-color);
+            }
+        }
+
+        .UserInfo__deleteAccount {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            cursor: pointer;
+
+            .deleteAccount-icon {
+                color: rgba(255, 0, 0, 1);
+                font-size: 1.3rem;
+
+                &:hover {
+                    color: rgba(255, 0, 0, 0.6);
+                }
+            }
+        }
+
+    }
+
+    .UserInfo__showAllUser {
+        width: 200px;
+        background-color: var(--brand-color);
+        padding: 8px 8px;
+        color: white;
+        letter-spacing: 1px;
+        border: none;
+        border-radius: 4px;
+        margin-top: 16px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        cursor: pointer;
+        backdrop-filter: blur(5px);
+        /* Apply background blur to the button */
+
+        &:hover {
+            background-color: #009bd3;
+            font-weight: bold;
+        }
+    }
+}
