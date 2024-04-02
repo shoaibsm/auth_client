@@ -18,43 +18,18 @@ function Login() {
                 password
             })
 
-            // const responseResult = response.data.result.result || response.data.result;
-            // const responseResult = response.data.result.result;
-
-            // console.log('response reult login  is :', responseResult);
-
-            // const userId = response.data.result.userId
-
-            // console.log('response from login.js ', response);
-            console.log('response from login.js ', response);
-
             const accessToken = response.result.accessToken
             const userId = response.result.userId
 
             console.log('accessToken in login.js ', accessToken);
 
-            console.log('userId in login.js ', userId);
-
-            // console.log('access token in login form ', response.data.result.accessToken);
-
-            // console.log('userId in login form ', response.data.result.userId);
-
             setItem(KEY_ACCESS_TOKEN, response.result.accessToken)
-            // setUserId(response.result.accessToken)
-
-            // console.log('User id from response ', userId);
-
-            // setLoggedInUserId(userId)
-
-            // console.log('got user id in login ', { loggedInUserId });
-
 
             navigate(`/user/${userId}`)
 
         } catch (error) {
             console.log(error);
         }
-
     }
 
     return (

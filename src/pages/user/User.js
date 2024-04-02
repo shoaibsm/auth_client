@@ -11,11 +11,10 @@ import { KEY_ACCESS_TOKEN, removeItem } from '../../utils/localStoragemanager';
 function User() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    // const [isDeleted, setIsDeleted] = useState(false)
+    const [isDeleted, setIsDeleted] = useState(false)
     const [allUsers, setAllUsers] = useState([])
 
     const params = useParams()
-    console.log('userId in params ', params.userId);
 
     const deleteUser = async () => {
         try {
@@ -36,13 +35,9 @@ function User() {
             try {
                 const response = await axiosClient.get(`/user/getUser/${params.userId}`)
 
-                console.log('response in User ', response);
-
                 setName(response.result.user.name)
                 setEmail(response.result.user.email)
 
-                console.log('name is ', response.result.user.name);
-                console.log('email is ', response.result.user.email);
             } catch (error) {
                 console.log(error);
             }
@@ -54,9 +49,9 @@ function User() {
         try {
             const response = await axiosClient.get('/user/allUser')
 
-            console.log('all user in User.js', response);
+            const allUserData = response.result.allUser
 
-            setAllUsers(response)
+            setAllUsers(allUserData)
 
         } catch (error) {
             console.log(error);

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { KEY_ACCESS_TOKEN, getItem, removeItem, setItem } from './localStoragemanager'
 
 export const axiosClient = axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: process.env.REACT_APP_SERVER_BASE_URL || 'http://localhost:4000',
     withCredentials: true
 })
 

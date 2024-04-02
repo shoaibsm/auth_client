@@ -1,8 +1,6 @@
 .UserInfo {
     width: 100vw;
     padding-top: 40px;
-    // height: 100vh;
-    // background-color: var(--accent-color);
     background-color: #eeeeee;
 
     .UserInfo__deleteText {
@@ -93,7 +91,6 @@
 
         &:hover {
             background-color: #009bd3;
-            font-weight: bold;
         }
     }
 }
