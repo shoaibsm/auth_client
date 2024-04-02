@@ -22,6 +22,7 @@ function User() {
             console.log('response from Delete user API ', response);
 
             removeItem(KEY_ACCESS_TOKEN)
+            setIsDeleted(true);
 
             window.location.replace('/login', '_self');
 
