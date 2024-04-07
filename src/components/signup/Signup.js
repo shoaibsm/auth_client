@@ -39,7 +39,7 @@ function Signup() {
                     <label htmlFor="password">Password</label>
                     <input type="password" className='Signup__password' id='password' onChange={(e) => setPassword(e.target.value)} />
 
-                    <input type="submit" className='Signup__submit' />
+                    <input type="submit" className='Signup__submit' value="Signup" />
                 </form>
                 <p className='Signup__navigationTxt'>Already have an account? <Link className='login-link' to={'/login'}>Login</Link></p>
             </div>
