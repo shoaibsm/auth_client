@@ -1,11 +1,15 @@
 import React from 'react'
 import './Home.scss'
-import Signup from '../../components/signup/Signup'
+import { Outlet } from 'react-router-dom'
+import Navbar from '../../components/navbar/Navbar'
+import User from '../user/User'
 
 function Home() {
     return (
         <div className='Home'>
-            <Signup />
+            <Navbar />
+            {/* <User /> */}
+            <Outlet />
         </div>
     )
 }

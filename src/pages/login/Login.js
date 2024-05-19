@@ -25,7 +25,8 @@ function Login() {
 
             setItem(KEY_ACCESS_TOKEN, response.result.accessToken)
 
-            navigate(`/user/${userId}`)
+            // navigate(`/user/${userId}`)
+            navigate('/')
 
         } catch (error) {
             console.log(error);

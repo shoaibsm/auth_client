@@ -1,9 +1,8 @@
 import { useParams } from 'react-router-dom'
-import Navbar from '../../components/navbar/Navbar'
 import './User.scss'
 import { useEffect, useState } from 'react';
 import { axiosClient } from '../../utils/axiosClient';
-import userImg from '../../assets/userImg.png'
+import userImgDummy from '../../assets/userImg.png'
 import { MdOutlineDelete } from "react-icons/md";
 import AllUser from '../allUser/AllUser';
 import { KEY_ACCESS_TOKEN, removeItem } from '../../utils/localStoragemanager';
@@ -11,14 +10,33 @@ import { KEY_ACCESS_TOKEN, removeItem } from '../../utils/localStoragemanager';
 function User() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [userImg, setUserImg] = useState('')
     const [isDeleted, setIsDeleted] = useState(false)
     const [allUsers, setAllUsers] = useState([])
-
     const params = useParams()
+
+
+    const getMyInfo = async () => {
+        try {
+            const response = await axiosClient.get('/user/getMyInfo')
+
+            const userName = response?.data?.result?.user?.name ?? 'User Name'
+            const userEmail = response?.data?.result?.user?.email ?? 'User Email'
+            const imgUrl = response?.data?.result?.user?.avatar?.url
+
+            setName(userName)
+            setEmail(userEmail)
+            setUserImg(imgUrl)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const deleteUser = async () => {
         try {
-            const response = await axiosClient.delete(`/user/deleteUser/${params.userId}`);
+            // const response = await axiosClient.delete(`/user/deleteUser/${params.userId}`);
+            const response = await axiosClient.delete(`/user/deleteUser`);
             console.log('response from Delete user API ', response);
 
             removeItem(KEY_ACCESS_TOKEN)
@@ -32,25 +50,16 @@ function User() {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axiosClient.get(`/user/getUser/${params.userId}`)
 
-                setName(response.result.user.name)
-                setEmail(response.result.user.email)
+        getMyInfo()
 
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [params.userId, isDeleted])
+    }, [])
 
     const getAllUser = async () => {
         try {
             const response = await axiosClient.get('/user/allUser')
 
-            const allUserData = response.result.allUser
+            const allUserData = response?.result?.allUser
 
             setAllUsers(allUserData)
 
@@ -61,11 +70,10 @@ function User() {
 
     return (
         <div className='UserInfo'>
-            <Navbar />
             {isDeleted ? (<p className='UserInfo__deleteText'>User has been deleted...!</p>) :
                 (<div className='UserInfo__card'>
                     <div className='UserInfo__userProfile'>
-                        <img src={userImg} alt={name} />
+                        <img src={userImg ? userImg : userImgDummy} alt={name} />
                     </div>
                     <div className='UserInfo__userDetails'>
                         <h5 className='UserInfo__userName'>{name}</h5>

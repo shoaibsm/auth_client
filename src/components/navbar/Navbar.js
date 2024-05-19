@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Navbar.scss'
 import { AiOutlineLogout } from "react-icons/ai";
 import { KEY_ACCESS_TOKEN, removeItem } from '../../utils/localStoragemanager';
@@ -6,7 +6,24 @@ import { useNavigate } from 'react-router-dom';
 import { axiosClient } from '../../utils/axiosClient';
 
 function Navbar() {
+    const [name, setName] = useState('')
+
     const navigate = useNavigate()
+
+    const getMyInfo = async () => {
+        try {
+            const response = await axiosClient.get('/user/getMyInfo')
+
+            console.log('response in navbar', response);
+
+            const userName = response?.data?.result?.user?.name ?? 'User Name'
+
+            setName(userName)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleLogoutClick = async () => {
         try {
@@ -17,11 +34,17 @@ function Navbar() {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+
+        getMyInfo()
+
+    }, [])
+
     return (
         <div className='Navbar'>
             <div className="Navbar__brand">
-                {/* letter put here user name */}
-                <h1 className='Navbar__brandTxt'>Shoaib Mohammed</h1>
+                <h1 className='Navbar__brandTxt'>{name ? name : 'User Name'} </h1>
             </div>
             <div className="Navbar__heading">
                 <h2 className='Navbar__headingTxt'>User Authentication </h2>

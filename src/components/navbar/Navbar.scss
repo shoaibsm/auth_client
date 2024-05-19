@@ -59,14 +59,33 @@
         font-size: 1.2rem;
         margin-right: 16px;
         cursor: pointer;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+
+            .Navbar__logoutTxt,
+            .Navbar__icon-logout {
+                color: #ffffff;
+            }
+        }
+
+        &:active {
+
+            .Navbar__logoutTxt,
+            .Navbar__icon-logout {
+                color: #d90429;
+            }
+        }
 
         .Navbar__logoutTxt {
-            color: red;
+            color: #d90429;
             font-size: 0.8rem;
+            transition: color 0.2s ease-in-out;
         }
 
         .Navbar__icon-logout {
-            color: red;
+            transition: color 0.2s ease-in-out;
+            color: #d90429;
         }
     }
 }
