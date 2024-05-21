@@ -15,6 +15,7 @@
         backdrop-filter: blur(10px);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: border 0.3s ease-in-out;
+        position: relative;
 
         &:hover {
             border: 1px solid rgba(0, 169, 255, 0.2);
@@ -48,7 +49,6 @@
             .Signup__password {
                 display: block;
                 width: 100%;
-                // margin-block: 10px;
                 margin-bottom: 4px;
 
                 &:focus {
@@ -160,6 +160,18 @@
                     color: var(--brand-color);
                 }
             }
+        }
+
+        .Signup__error {
+            font-size: 0.7rem;
+            font-style: italic;
+            letter-spacing: 1px;
+            color: #e63946;
+            user-select: none;
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
         }
     }
 }

@@ -9,7 +9,4 @@ root.render(
 	<BrowserRouter>
 		<App />
 	</BrowserRouter>
-	// <HashRouter>
-	// 	<App />
-	// </HashRouter>
 );

@@ -1,21 +1,18 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css';
-// import Login from './components/login/Login';
-// import Signup from './components/signup/Signup';
 import RequireUser from './components/RequireUser';
-import User from './pages/user/User';
-import AllUser from './pages/allUser/AllUser';
 import IsUserLoggedIn from './components/IsUserLoggedIn';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
+import User from './components/user/User';
+import AllUser from './components/allUser/AllUser';
 
 function App() {
 	return (
 		<div className="App">
 
 			<Routes>
-
 				<Route element={<RequireUser />}>
 
 					<Route path='/' element={<Home />}>

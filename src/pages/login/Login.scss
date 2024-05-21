@@ -86,18 +86,32 @@
             font-size: 0.8rem;
             color: var(--primary-color);
             margin-top: 8px;
+
+            .signup-link {
+                text-decoration: none;
+                color: var(--text-white);
+                font-weight: 400;
+                padding-left: 4px;
+                transition: color 0.3s ease-in-out;
+
+                &:hover {
+                    color: var(--brand-color);
+                }
+            }
         }
 
-        .signup-link {
-            text-decoration: none;
-            color: var(--text-white);
-            font-weight: 400;
-            padding-left: 4px;
-            transition: color 0.3s ease-in-out;
 
-            &:hover {
-                color: var(--brand-color);
-            }
+
+        .Signup__error {
+            font-size: 0.7rem;
+            font-style: italic;
+            letter-spacing: 1px;
+            color: #e63946;
+            user-select: none;
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
     }

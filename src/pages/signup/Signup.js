@@ -9,10 +9,12 @@ function Signup() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [userImg, setUserImg] = useState('')
+    const [error, setError] = useState(null)
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null)
         try {
             const result = await axiosClient.post('/auth/signup', {
                 name,
@@ -21,10 +23,15 @@ function Signup() {
                 userImg
             })
 
-            navigate('/login')
-            console.log('signup result ', result);
+            if (result.status === 'ok') {
+                navigate('/login')
+            } else {
+                console.log('error in signup ', error);
+                setError(result.message || 'Something went wrong, please try again.')
+            }
+
         } catch (error) {
-            console.log(error);
+            setError(error.message || 'An error occurred. Please try again.');
         }
     }
 
@@ -36,8 +43,6 @@ function Signup() {
             fileReader.onload = () => {
                 if (fileReader.readyState === fileReader.DONE) {
                     setUserImg(fileReader.result)
-
-                    console.log('image data ', fileReader.result);
                 }
             }
         } catch (error) {
@@ -68,7 +73,10 @@ function Signup() {
                     <input type="submit" className='Signup__submit' value="Signup" />
                 </form>
                 <p className='Signup__navigationTxt'>Already have an account? <Link className='login-link' to={'/login'}>Login</Link></p>
+
+                {error && <p className="Signup__error">{error}</p>}
             </div>
+
         </div>
     )
 }

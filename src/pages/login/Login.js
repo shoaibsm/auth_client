@@ -7,10 +7,12 @@ import { Link, useNavigate } from 'react-router-dom'
 function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState(null)
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null)
 
         try {
             const response = await axiosClient.post('/auth/login', {
@@ -18,18 +20,23 @@ function Login() {
                 password
             })
 
-            const accessToken = response.result.accessToken
-            const userId = response.result.userId
+            if (response && response.result) {
 
-            console.log('accessToken in login.js ', accessToken);
+                const accessToken = response.result.accessToken
+                const userId = response.result.userId
 
-            setItem(KEY_ACCESS_TOKEN, response.result.accessToken)
+                console.log('accessToken in login.js ', accessToken);
 
-            // navigate(`/user/${userId}`)
-            navigate('/')
+                setItem(KEY_ACCESS_TOKEN, response.result.accessToken)
 
+                navigate('/')
+            } else {
+                setError(response.message || 'Login failed. Please check your credentials and try again.')
+            }
         } catch (error) {
-            console.log(error);
+            const errorMessage = error.response?.data?.message || error.message || 'An error occurred. Please try again.';
+
+            setError(errorMessage);
         }
     }
 
@@ -47,6 +54,8 @@ function Login() {
                     <input type="submit" className='Login__submit' value="Login" />
                 </form>
                 <p className='Login__navigationTxt'>Dont have an account? <Link className='signup-link' to={'/signup'}>Sign Up</Link></p>
+
+                {error && <p className="Signup__error">{error}</p>}
             </div>
         </div>
     )
