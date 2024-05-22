@@ -32,6 +32,8 @@
 
             img {
                 width: 150px;
+                height: 150px;
+                border-radius: 50%;
                 margin-block: 16px;
             }
         }
@@ -86,7 +88,6 @@
         transform: translateX(-50%);
         cursor: pointer;
         backdrop-filter: blur(5px);
-        /* Apply background blur to the button */
 
         &:hover {
             background-color: #009bd3;

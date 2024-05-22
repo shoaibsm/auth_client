@@ -13,8 +13,6 @@ function User() {
     const [userImg, setUserImg] = useState('')
     const [isDeleted, setIsDeleted] = useState(false)
     const [allUsers, setAllUsers] = useState([])
-    const params = useParams()
-
 
     const getMyInfo = async () => {
         try {
@@ -35,7 +33,6 @@ function User() {
 
     const deleteUser = async () => {
         try {
-            // const response = await axiosClient.delete(`/user/deleteUser/${params.userId}`);
             const response = await axiosClient.delete(`/user/deleteUser`);
             console.log('response from Delete user API ', response);
 

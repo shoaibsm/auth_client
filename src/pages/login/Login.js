@@ -22,16 +22,11 @@ function Login() {
 
             if (response && response.result) {
 
-                const accessToken = response.result.accessToken
-                const userId = response.result.userId
-
-                console.log('accessToken in login.js ', accessToken);
-
-                setItem(KEY_ACCESS_TOKEN, response.result.accessToken)
+                setItem(KEY_ACCESS_TOKEN, response?.result?.accessToken)
 
                 navigate('/')
             } else {
-                setError(response.message || 'Login failed. Please check your credentials and try again.')
+                setError(response?.message || 'Login failed. Please check your credentials and try again.')
             }
         } catch (error) {
             const errorMessage = error.response?.data?.message || error.message || 'An error occurred. Please try again.';

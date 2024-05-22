@@ -1,65 +1,69 @@
-import axios from 'axios'
+import axios from 'axios';
 import { KEY_ACCESS_TOKEN, getItem, removeItem, setItem } from './localStoragemanager'
 
-let baseURL = 'http://localhost:4000'
-
-console.log('env is ', process.env.NODE_ENV);
+let baseURL = "http://localhost:4000/";
 
 if (process.env.NODE_ENV === 'production') {
-    baseURL = process.env.REACT_APP_SERVER_BASE_URL
+    baseURL = process.env.REACT_APP_SERVER_BASE_URL;
 }
 
 export const axiosClient = axios.create({
     baseURL,
     withCredentials: true
+});
+
+axiosClient.interceptors.request.use((request) => {
+    const accessToken = getItem(KEY_ACCESS_TOKEN)
+    request.headers["Authorization"] = `Bearer ${accessToken}`
+    return request
 })
 
-// request intercep
-axiosClient.interceptors.request.use(
-    (request) => {
-        const accessToken = getItem(KEY_ACCESS_TOKEN);
-        request.headers["Authorization"] = `Bearer ${accessToken}`;
-        console.log('accessToken in request interceptor', accessToken);
-        return request;
-    },
-    (error) => {
-        return Promise.reject(error);
+axiosClient.interceptors.response.use(async (response) => {
+    const data = response.data
+    if (data.status === 'ok') {
+        return data
     }
-)
 
-// response intercept
-axiosClient.interceptors.response.use(
+    const originalRequest = response.config
+    const statusCode = data.statusCode
+    const error = data.message
 
-    (response) => {
-        const data = response.data;
-        return data;
-    },
-    async (error) => {
-        const originalRequest = error.config;
-        const statusCode = error.response.data?.statusCode;
-        const errorMsg = error.response.data?.message || error.message;
+    if (statusCode === 401 && !originalRequest._retry) {
 
-        if (statusCode === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        originalRequest._retry = true;
 
+        try {
             const response = await axios.create({
-                withCredentials: true,
-            }).get(`${baseURL}/auth/refresh`)
+                withCredentials: true
+            }).get(`${baseURL}auth/refresh`)
+
+            console.log('refresh accessToken API called');
 
             if (response.data.status === 'ok') {
                 setItem(KEY_ACCESS_TOKEN, response.data.result.accessToken)
 
-                originalRequest.headers['Authorization'] = `Bearer ${response.data.result.accessToken}`
+                originalRequest.headers["Authorization"] = `Bearer ${response.data.result.accessToken}`
 
-                console.log('New Access Token :', response.data.result.accessToken);
+                console.log('New accessToekn', response.data.result.accessToken);
 
                 return axios(originalRequest)
             } else {
                 removeItem(KEY_ACCESS_TOKEN)
+                console.log('User logedout for refreshToken expire');
                 window.location.replace('/login', '_self')
-                return Promise.reject(new Error('Unauthorized'));
+
+                return Promise.reject(error)
             }
+
+        } catch (refreshError) {
+            removeItem(KEY_ACCESS_TOKEN);
+            window.location.replace('/login', '_self');
+
+            return Promise.reject(refreshError);
         }
-        return Promise.reject(error.response?.data || errorMsg);
     }
-)
+    return Promise.reject(new Error(error))
+
+}, (error) => {
+    return Promise.reject(error);
+})

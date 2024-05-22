@@ -14,8 +14,6 @@ function Navbar() {
         try {
             const response = await axiosClient.get('/user/getMyInfo')
 
-            console.log('response in navbar', response);
-
             const userName = response?.data?.result?.user?.name ?? 'User Name'
 
             setName(userName)
